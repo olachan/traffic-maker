@@ -3,6 +3,7 @@
 
 from __future__ import print_function, unicode_literals
 
+import os
 import random
 
 import requests
@@ -11,6 +12,8 @@ import user_agent
 
 import conf
 import db
+
+dir_path = os.path.join(os.path.abspath(os.path.dirname(__file__)), "logs")
 
 
 @tomorrow.threads(5)
@@ -32,7 +35,7 @@ def download(url):
 
 
 def main():
-    for url in db.gather_urls():
+    for url in db.gather_urls(dir_path):
         download(url.strip('\n'))
 
 
