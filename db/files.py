@@ -44,7 +44,7 @@ class TXTProcess(FileProcess):
 
         if os.path.exists(file_path) and os.path.isfile(file_path):
             with open(file_path, 'rb') as f:
-                lines = f.readlines()
+                lines = [item for item in f.readlines() if item.startswith('http')]
                 if lines:
                     self._all_lines.extend(lines)
 
