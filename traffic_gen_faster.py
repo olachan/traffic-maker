@@ -3,10 +3,13 @@
 
 from __future__ import print_function, unicode_literals
 
+import random
+
 import requests
 import tomorrow
-from user_agent import generate_user_agent
+import user_agent
 
+from conf import HTTP_PROXIES, HTTPS_PROXIES
 from db import all_file_lines
 
 
@@ -22,7 +25,19 @@ def gather_urls():
 
 @tomorrow.threads(5)
 def download(url):
-    response = requests.get(url, headers={'User-Agent': generate_user_agent()})
+    """访问网址.
+
+        :param url: 网址
+    """
+
+    headers = {'User-Agent': user_agent.generate_user_agent()}
+
+    proxies = {
+        'http': random.choice(HTTP_PROXIES),
+        'https': random.choice(HTTPS_PROXIES),
+    }
+
+    response = requests.get(url, proxies=proxies, verify=False, headers=headers)
     print("%s ==> %s" % (url, response.status_code))
 
 
