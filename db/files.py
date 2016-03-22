@@ -73,3 +73,38 @@ class XMLProcess(FileProcess):
 
             if lines:
                 self._all_lines.extend(lines)
+
+
+def all_file_lines(dir_path, kind='txt'):
+    """文本文件所有行.
+
+        :param dir_path: 文件目录
+        :param kind: 文件类型
+    """
+
+    if kind not in ['txt', 'xml', 'url']:
+        return
+
+    file_list, file_lines = None, None
+
+    if kind == 'txt':
+        file_list = TXTProcess(parent_path=dir_path)
+    elif kind == 'xml':
+        file_list = XMLProcess(parent_path=dir_path)
+
+    if file_list:
+        file_lines = file_list()
+
+    return file_lines
+
+
+def gather_urls(dir_path):
+    """收集目标网址.
+
+        :param dir_path: 文件目录
+    """
+
+    urls_list = []
+    for kind in ['txt', 'xml']:
+        urls_list.extend(all_file_lines(dir_path, kind))
+    return urls_list
