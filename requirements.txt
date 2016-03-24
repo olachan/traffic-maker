@@ -4,3 +4,5 @@ tomorrow>=0.2.4
 splinter>=0.7.3
 user_agent>=0.1.1
 supervisor>=3.2.0
+
+beautifulsoup4>=4.4.1

@@ -4,3 +4,5 @@
 HTTP_PROXIES = []
 
 HTTPS_PROXIES = []
+
+LINKS_IGNORE = ['.js', '.css', '.png', '.gif', '.jpg']
