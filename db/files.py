@@ -64,7 +64,7 @@ class XMLProcess(FileProcess):
         if os.path.exists(file_path) and os.path.isfile(file_path):
             try:
                 xml_file = xml_dom.parse(file_path)
-            except Exception, ex:
+            except Exception as ex:
                 print(ex)
                 lines = None
             else:

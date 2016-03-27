@@ -1,10 +1,10 @@
 #!usr/bin/env python
 # coding: utf-8
 
-import urlparse
-
 import bs4
 import requests
+from six.moves import range
+from six.moves.urllib.parse import urlsplit, urljoin
 
 from base import Process
 from conf import LINKS_IGNORE
@@ -22,7 +22,7 @@ class UrlProcess(Process):
 
         super(UrlProcess, self).__init__(parent_path)
 
-        result = urlparse.urlsplit(parent_path) if parent_path else None
+        result = urlsplit(parent_path) if parent_path else None
         head_url = "%s://%s" % (result.scheme, result.netloc) if result else ""
         self._head_url = head_url
 
@@ -50,8 +50,17 @@ class UrlProcess(Process):
         lines = super(UrlProcess, self).__call__()
         lines = filter(lambda x: x[x.rfind('.'):] not in LINKS_IGNORE, lines)
 
-        for i in xrange(len(lines)):
+        for i in range(len(lines)):
             if lines[i] and not lines[i].startswith(self._head_url):
-                lines[i] = urlparse.urljoin(self._head_url, lines[i])
+                lines[i] = urljoin(self._head_url, lines[i])
 
         return lines
+
+
+def collect_urls(site_url):
+    """收集目标网址.
+
+        :param site_url: 目标网址
+    """
+
+    return UrlProcess(site_url)()

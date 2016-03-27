@@ -4,16 +4,17 @@
 from __future__ import print_function, unicode_literals
 
 import random
+from functools import partial
 
 from twisted.internet import task, reactor
 
-from common.scheduler import partial, skip_hours, NoInterval
+import common
 
 limits = (1, 2, 3)
 intervals = (30, 50, 70, 100)
 
 
-@skip_hours
+@common.skip_hours
 def fake_accessor(pages_count=1):
     """模拟访问网页.
 
@@ -36,7 +37,7 @@ def imitate_visitors(always=False):
         reactor.run()
     else:
         cb = partial(fake_accessor, pages_count=random.choice(limits))
-        NoInterval.demo(cb, intervals=intervals)
+        common.NoInterval.demo(cb, intervals=intervals)
 
 
 if __name__ == '__main__':

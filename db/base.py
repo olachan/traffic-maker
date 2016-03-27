@@ -1,6 +1,8 @@
 #!usr/bin/env python
 # coding: utf-8
 
+import six
+
 
 class Process(object):
     """数据处理, 从指定路径中读所有数据返回其所有行.
@@ -25,7 +27,7 @@ class Process(object):
         """对指定的操作路径, 执行指定的操作命令.
         """
 
-        if isinstance(self._directory, basestring):
+        if isinstance(self._directory, six.string_types):
             self.process_target_path(self._directory)
         elif isinstance(self._directory, (tuple, list)):
             for path in self._directory:
